@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">DS_2</string>
+    <string name="textview">TextView</string>
+    <string name="button">Button</string>
+    <string name="chat">Chat</string>
+    <string name="Topic1">Topic 1</string>
+    <string name="Topic2">Topic 2</string>
+    <string name="Topic3">Topic 3</string>
+    <string name="Topic4">Topic 4</string>
+    <string name="Topic5">Topic 5</string>
+    <string name="Topic6">Topic 6</string>
+</resources>
