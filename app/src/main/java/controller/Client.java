@@ -3,13 +3,9 @@ package controller;
 import model.ProfileName;
 import utils.Config;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.net.Socket;
-import java.util.Scanner;
 
-import static java.lang.Thread.currentThread;
 import static java.lang.Thread.sleep;
 
 
@@ -18,7 +14,8 @@ public class Client {
     Publisher publisher;
     ProfileName profileName;
     private Socket socket;
-    Client(Address address, String name) throws IOException {
+
+    public Client(Address address, String name) throws IOException {
         try{
             this.socket = new Socket(address.getIp(), address.getPort());
             this.consumer = new Consumer(socket);
@@ -52,9 +49,9 @@ public class Client {
         System.out.println("If you want to exit from topic write " + Config.EXIT_FROM_TOPIC);
         return topicName;
     }
-    public static void main(String[] args) throws IOException, InterruptedException {
-        String username = Config.readFromUser("What is your name?");
-        Client client  = new Client(Config.ZOOKEEPER_CLIENTS, username);
+
+    public  void dosmth(Client client,String username) throws IOException, InterruptedException {
+
         String topicName = client.initialConnectWithZookeeperAndGetTopic(username);
 
         //Images
