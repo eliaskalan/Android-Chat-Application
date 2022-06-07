@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button confirmButton;
     EditText username;
-    Socket socket;
+    SocketHandler socketHandler = new SocketHandler();
 
 
 
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Intent intent = new Intent(MainActivity.this,Topics.class);
         confirmButton = findViewById(R.id.button);
 
         username =  findViewById(R.id.editTextTextPersonName);
@@ -49,10 +49,12 @@ public class MainActivity extends AppCompatActivity {
                 if(name!=null)
                 {
 
-                    Login login = new Login();
-                    login.execute(name);
+                    intent.putExtra("USERNAME",name);
+                    startActivity(intent);
+                    //Login login = new Login();
+                    //login.execute(name);
                     //login.doInBackground(name);
-                    nextActivity(v);
+                    //nextActivity(v);
                 }
             }
         });
@@ -73,9 +75,9 @@ public class Login extends AsyncTask<String,String ,String>
 
 
         try {
-
+            socketHandler.setSocket(new Socket("10.0.2.2",22346));
             Client client = new Client(Config.ZOOKEEPER_CLIENTS,strings[0]);
-            client.initialConnectWithZookeeperAndGetTopic(strings[0]);
+            client.initialConnectWithZookeeper(strings[0]);
 
         } catch (IOException e) {
             e.printStackTrace();

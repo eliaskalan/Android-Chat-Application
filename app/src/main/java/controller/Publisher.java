@@ -12,6 +12,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.Serializable;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -19,7 +20,7 @@ import model.MultimediaFile;
 import model.ProfileName;
 import utils.Config;
 
-public class Publisher{
+public class Publisher implements Serializable {
 
     private BufferedWriter bufferedWriter;
     private Socket socket;
