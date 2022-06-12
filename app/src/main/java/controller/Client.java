@@ -10,8 +10,8 @@ import static java.lang.Thread.sleep;
 
 
 public class Client {
-    Consumer consumer;
-    Publisher publisher;
+    public Consumer consumer;
+    public Publisher publisher;
     ProfileName profileName;
     private Socket socket;
 

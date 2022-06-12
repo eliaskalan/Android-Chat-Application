@@ -6,24 +6,23 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import java.io.IOException;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import controller.Address;
 import controller.Client;
 import utils.Config;
 
 public class Topics extends AppCompatActivity {
-    Button confirmButton;
+    Client client;
     private ListView topicsButtonListView;
     private TopicsButtonAdapter topicsButtonAdapter;
     private Intent intent;
+    Login login;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +32,7 @@ public class Topics extends AppCompatActivity {
         if (extras != null) {
             String name = extras.getString("USERNAME");
             //The key argument here must match that used in the other activity
-            Login login = new Login();
+            login = new Login();
             login.execute(name);
         }
         topicsButtonListView = findViewById(R.id.buttonListView);
@@ -41,14 +40,35 @@ public class Topics extends AppCompatActivity {
         topicsButtonAdapter = new TopicsButtonAdapter(this, R.layout.item_message, buttons);
         topicsButtonListView.setAdapter(topicsButtonAdapter);
     }
-    public void goToChat(View view){
+    public void goToChat(View view) throws IOException {
         Button b = (Button) view;
-        this.intent.putExtra("TOPIC_ID", b.getText().toString());
-        startActivity(intent);
-    }
+        String topicFullName = b.getText().toString();
+        intent.putExtra("TOPIC_FULL_NAME", topicFullName);
+        String topicId = Character.toString(topicFullName.replace(" ", "").charAt(0));
+        intent.putExtra("TOPIC_ID", topicId);
+        new Thread(new Runnable(){
+            public void run() {
+                try {
+                    Address address = login.getBroker(topicId);
+                    intent.putExtra("BROKER_IP", address.getIp());
+                    intent.putExtra("BROKER_PORT", Integer.toString(address.getPort()));
+                    startActivity(intent);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
 
+    }
     public class Login extends AsyncTask<String,String ,String>
     {
+
+        public Address getBroker(String topicId) throws IOException {
+            client.publisher.sendOneTimeMessage(topicId);
+            String topicName = client.consumer.listenForMessageOneTime();
+            Address address = client.getBrokerAddress();
+            return address;
+        }
 
         @Override
         protected String doInBackground(String... strings) {
@@ -56,13 +76,11 @@ public class Topics extends AppCompatActivity {
 
             try {
 
-                Client client = new Client(Config.ZOOKEEPER_CLIENTS,strings[0]);
+                client = new Client(Config.ZOOKEEPER_CLIENTS,strings[0]);
                 client.initialConnectWithZookeeper(strings[0]);
                 String localTopics = client.getTopic();
-                System.out.println(localTopics);
                 String[] topics =localTopics.split("~");
 
-                LinearLayout layout = findViewById((R.id.linearLayout));
                 for(int i = 0; i < topics.length; i++){
                     String text = topics[i];
                     if(!(text.replace(" ", "")).equals("")){
