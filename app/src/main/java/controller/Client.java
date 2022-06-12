@@ -51,7 +51,9 @@ public class Client {
     public void selectTopic(String id) throws IOException {
         //String id = Config.readFromUser("Select the topic you want");
         System.out.println(id);
+        //Selects the Topic
         this.publisher.sendOneTimeMessage(id);
+        //Returns the TopicName
         String topicName = this.consumer.listenForMessageOneTime();
         System.out.println("If you want to exit from topic write " + Config.EXIT_FROM_TOPIC);
         //return topicName;
