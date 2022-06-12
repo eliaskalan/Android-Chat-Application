@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTitle("Aueb Chat");
         Intent intent = new Intent(MainActivity.this,Topics.class);
         confirmButton = findViewById(R.id.button);
 
@@ -62,14 +63,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-public class Login extends AsyncTask<String,String ,String>
+public class Initial extends AsyncTask<String,String ,String>
 {
-
-    private void login(final String... strings)
-    {
-
-    }
-
     @Override
     protected String doInBackground(String... strings) {
 

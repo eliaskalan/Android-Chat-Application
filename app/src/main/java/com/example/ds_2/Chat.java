@@ -22,13 +22,10 @@ public class Chat extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         String topic = getIntent().getStringExtra("TOPIC_FULL_NAME");
-        setTitle(topic);
         String brokerIp = getIntent().getStringExtra("BROKER_IP");
         String brokerPort = getIntent().getStringExtra("BROKER_PORT");
         String topicId = getIntent().getStringExtra("TOPIC_ID");
-        System.out.println(brokerIp);
-        System.out.println(brokerPort);
-        System.out.println(topicId);
+        setTitle(topic + " | " + brokerIp + ":" + brokerPort);
     }
 
     public class ChatConnect extends AsyncTask<String,String ,String>

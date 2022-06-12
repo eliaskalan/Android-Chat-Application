@@ -27,6 +27,7 @@ public class Topics extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topics);
+        setTitle("Topics");
         Bundle extras = getIntent().getExtras();
         intent = new Intent(Topics.this,Chat.class);
         if (extras != null) {
