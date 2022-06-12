@@ -6,17 +6,23 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 import controller.Client;
 import utils.Config;
 
 public class Topics extends AppCompatActivity {
     Button confirmButton;
+    private ListView topicsButtonListView;
+    private TopicsButtonAdapter topicsButtonAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,13 +35,10 @@ public class Topics extends AppCompatActivity {
             Login login = new Login();
             login.execute(name);
         }
-        confirmButton = findViewById(R.id.button2);
-        confirmButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                    startActivity(intent);
-            }
-        });
+        topicsButtonListView = findViewById(R.id.buttonListView);
+        final List<TopicButtonMessage> buttons = new ArrayList<>();
+        topicsButtonAdapter = new TopicsButtonAdapter(this, R.layout.item_message, buttons);
+        topicsButtonListView.setAdapter(topicsButtonAdapter);
     }
 
     public class Login extends AsyncTask<String,String ,String>
@@ -54,21 +57,13 @@ public class Topics extends AppCompatActivity {
                 String[] topics =localTopics.split("~");
 
                 LinearLayout layout = findViewById((R.id.linearLayout));
-                //Button[] button= new Button[6];
                 int count = layout.getChildCount();
-                //int lastPosition = 0;
-
-                for (int i=0; i<count; i++)
-                {
-                    View view = layout.getChildAt(i);
-                    if(view instanceof Button)
-                    {
-                        ((Button) view).setText(topics[i]);
+                for(int i = 0; i < topics.length; i++){
+                    String text = topics[i];
+                    if(!(text.replace(" ", "")).equals("")){
+                        topicsButtonAdapter.add(new TopicButtonMessage((topics[i])));
                     }
-
                 }
-
-
             } catch (IOException e) {
                 e.printStackTrace();
             }

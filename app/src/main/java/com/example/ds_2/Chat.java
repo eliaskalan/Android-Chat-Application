@@ -22,4 +22,17 @@ public class Chat extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
     }
+
+    public class ChatConnect extends AsyncTask<String,String ,String>
+    {
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+
+          System.out.println("hello");
+
+            return null;
+        }
+    }
 }
