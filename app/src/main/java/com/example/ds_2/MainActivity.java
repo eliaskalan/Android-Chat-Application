@@ -87,12 +87,4 @@ public class Login extends AsyncTask<String,String ,String>
         return null;
     }
 }
-
-
-    public void nextActivity(View v)
-    {
-        Intent intent = new Intent(this,Topics.class);
-        startActivity(intent);
-    }
-
 }

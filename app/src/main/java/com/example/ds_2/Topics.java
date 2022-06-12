@@ -23,12 +23,13 @@ public class Topics extends AppCompatActivity {
     Button confirmButton;
     private ListView topicsButtonListView;
     private TopicsButtonAdapter topicsButtonAdapter;
+    private Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topics);
         Bundle extras = getIntent().getExtras();
-        Intent intent = new Intent(Topics.this,Chat.class);
+        intent = new Intent(Topics.this,Chat.class);
         if (extras != null) {
             String name = extras.getString("USERNAME");
             //The key argument here must match that used in the other activity
@@ -39,6 +40,11 @@ public class Topics extends AppCompatActivity {
         final List<TopicButtonMessage> buttons = new ArrayList<>();
         topicsButtonAdapter = new TopicsButtonAdapter(this, R.layout.item_message, buttons);
         topicsButtonListView.setAdapter(topicsButtonAdapter);
+    }
+    public void goToChat(View view){
+        Button b = (Button) view;
+        this.intent.putExtra("TOPIC_ID", b.getText().toString());
+        startActivity(intent);
     }
 
     public class Login extends AsyncTask<String,String ,String>
@@ -57,7 +63,6 @@ public class Topics extends AppCompatActivity {
                 String[] topics =localTopics.split("~");
 
                 LinearLayout layout = findViewById((R.id.linearLayout));
-                int count = layout.getChildCount();
                 for(int i = 0; i < topics.length; i++){
                     String text = topics[i];
                     if(!(text.replace(" ", "")).equals("")){

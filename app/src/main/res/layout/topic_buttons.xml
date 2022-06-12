@@ -10,6 +10,7 @@
         android:id="@+id/buttonTopic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/Topic1" />
+        android:text="@string/Topic1"
+        android:onClick="goToChat"/>
 
 </LinearLayout>

@@ -16,11 +16,13 @@ import controller.Client;
 import utils.Config;
 
 public class Chat extends AppCompatActivity {
-
+    private Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        String topic = getIntent().getStringExtra("TOPIC_ID");
+        setTitle(topic);
     }
 
     public class ChatConnect extends AsyncTask<String,String ,String>
@@ -30,7 +32,7 @@ public class Chat extends AppCompatActivity {
         protected String doInBackground(String... strings) {
 
 
-          System.out.println("hello");
+
 
             return null;
         }
