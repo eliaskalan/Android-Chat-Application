@@ -41,11 +41,6 @@ public class Topics extends AppCompatActivity {
     public class Login extends AsyncTask<String,String ,String>
     {
 
-        private void login(final String... strings)
-        {
-
-        }
-
         @Override
         protected String doInBackground(String... strings) {
 
@@ -81,11 +76,5 @@ public class Topics extends AppCompatActivity {
 
             return null;
         }
-    }
-
-    public void nextActivity(View v)
-    {
-        Intent intent = new Intent(this,Chat.class);
-        startActivity(intent);
     }
 }
