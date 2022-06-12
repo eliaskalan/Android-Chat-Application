@@ -38,7 +38,7 @@ public class Topics extends AppCompatActivity {
         }
         topicsButtonListView = findViewById(R.id.buttonListView);
         final List<TopicButtonMessage> buttons = new ArrayList<>();
-        topicsButtonAdapter = new TopicsButtonAdapter(this, R.layout.item_message, buttons);
+        topicsButtonAdapter = new TopicsButtonAdapter(this, R.layout.topic_buttons, buttons);
         topicsButtonListView.setAdapter(topicsButtonAdapter);
     }
     public void goToChat(View view) throws IOException {
