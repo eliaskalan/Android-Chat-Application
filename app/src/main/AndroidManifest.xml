@@ -20,6 +20,9 @@
             android:name=".Topics"
             android:exported="false" />
         <activity
+            android:name=".Chat"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

@@ -16,20 +16,26 @@ import controller.Client;
 import utils.Config;
 
 public class Topics extends AppCompatActivity {
-
+    Button confirmButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topics);
         Bundle extras = getIntent().getExtras();
+        Intent intent = new Intent(Topics.this,Chat.class);
         if (extras != null) {
             String name = extras.getString("USERNAME");
             //The key argument here must match that used in the other activity
             Login login = new Login();
             login.execute(name);
-
-
         }
+        confirmButton = findViewById(R.id.button2);
+        confirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    startActivity(intent);
+            }
+        });
     }
 
     public class Login extends AsyncTask<String,String ,String>
@@ -77,4 +83,9 @@ public class Topics extends AppCompatActivity {
         }
     }
 
+    public void nextActivity(View v)
+    {
+        Intent intent = new Intent(this,Chat.class);
+        startActivity(intent);
+    }
 }
