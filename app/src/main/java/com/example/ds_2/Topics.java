@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -50,23 +52,20 @@ public class Topics extends AppCompatActivity {
                 System.out.println(localTopics);
                 String[] topics =localTopics.split("~");
 
+                LinearLayout layout = findViewById((R.id.linearLayout));
+                //Button[] button= new Button[6];
+                int count = layout.getChildCount();
+                //int lastPosition = 0;
 
-                Button mButton = findViewById(R.id.button2);
-                mButton.setText(topics[1]);
-                Button mButton2 =findViewById(R.id.button3);
-                mButton2.setText(topics[2]);
-                Button mButton3 = findViewById(R.id.button4);
-                mButton3.setText(topics[3]);
-                Button mButton4 =findViewById(R.id.button5);
-                mButton4.setText(topics[4]);
-                Button mButton5 = findViewById(R.id.button6);
-                mButton5.setText(topics[5]);
-                Button mButton6 =findViewById(R.id.button7);
-                mButton6.setText(topics[6]);
+                for (int i=0; i<count; i++)
+                {
+                    View view = layout.getChildAt(i);
+                    if(view instanceof Button)
+                    {
+                        ((Button) view).setText(topics[i]);
+                    }
 
-
-
-
+                }
 
 
             } catch (IOException e) {
