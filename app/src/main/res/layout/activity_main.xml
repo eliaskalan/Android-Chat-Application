@@ -12,10 +12,11 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="428dp"
         android:onClick="nextActivity"
-        android:text="@string/button"
+        android:text="Login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Login" />
 
     <EditText
         android:id="@+id/editTextTextPersonName"
@@ -25,8 +26,9 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        android:text="Name"
+        android:hint="Add your username"
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Username" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String name = username.getText().toString();
-                if(name!=null)
+                if(name!=null && !name.equals(""))
                 {
 
                     intent.putExtra("USERNAME",name);
