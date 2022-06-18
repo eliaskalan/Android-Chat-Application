@@ -1,11 +1,12 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import utils.Config;
 
-public class ProfileName {
+public class ProfileName implements Serializable {
     String profileName;
     private static int usersNum = 0;
     HashMap<String, ArrayList<Value>>  userVideoFilesMap;

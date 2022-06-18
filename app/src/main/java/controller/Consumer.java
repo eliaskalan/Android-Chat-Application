@@ -10,11 +10,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.Socket;
 
 import model.MultimediaFile;
 
-public class Consumer{
+public class Consumer implements Serializable {
     private BufferedReader bufferedReader;
     private Socket socket;
     private InputStream inputStream;
@@ -49,11 +50,12 @@ public class Consumer{
     public String listenForMessageOneTime() throws IOException {
         String msg;
         msg = bufferedReader.readLine();
-        return msg;
+        return (String) msg;
     }
 
-    public void printListenForMessageOneTime() throws IOException {
-      System.out.println(listenForMessageOneTime());
+    public String printListenForMessageOneTime() throws IOException {
+      String topic =listenForMessageOneTime();
+      return topic;
     }
 
     public final static String

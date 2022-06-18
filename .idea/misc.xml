@@ -5,6 +5,12 @@
       <map>
         <entry key="..\:/Users/elias/Documents/GitHub/DS_2/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/elias/Documents/GitHub/DS_2/app/src/main/res/layout/activity_topics.xml" value="0.24947916666666667" />
+        <entry key="app/src/main/res/layout/activity_chat.xml" value="0.18" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_topics.xml" value="0.16840731070496084" />
+        <entry key="app/src/main/res/layout/item_message.xml" value="0.11944444444444445" />
+        <entry key="app/src/main/res/layout/topic_button.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/topic_buttons.xml" value="0.11944444444444445" />
       </map>
     </option>
   </component>

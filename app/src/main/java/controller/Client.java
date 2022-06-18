@@ -3,22 +3,19 @@ package controller;
 import model.ProfileName;
 import utils.Config;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.net.Socket;
-import java.util.Scanner;
 
-import static java.lang.Thread.currentThread;
 import static java.lang.Thread.sleep;
 
 
 public class Client {
-    Consumer consumer;
-    Publisher publisher;
+    public Consumer consumer;
+    public Publisher publisher;
     ProfileName profileName;
     private Socket socket;
-    Client(Address address, String name) throws IOException {
+
+    public Client(Address address, String name) throws IOException {
         try{
             this.socket = new Socket(address.getIp(), address.getPort());
             this.consumer = new Consumer(socket);
@@ -41,50 +38,59 @@ public class Client {
         return new Address(ip, Integer.parseInt(port));
     }
 
-    public String initialConnectWithZookeeperAndGetTopic(String username) throws IOException {
+    public void initialConnectWithZookeeper(String username) throws IOException {
         this.publisher.sendOneTimeMessage(username);
         System.out.println("Welcome " + username);
-        this.consumer.printListenForMessageOneTime();
-        String id = Config.readFromUser("Select the topic you want");
+
+    }
+    public String getTopic() throws IOException {
+        String topic = this.consumer.printListenForMessageOneTime();
+        return topic;
+
+    }
+    public void selectTopic(String id) throws IOException {
+        //String id = Config.readFromUser("Select the topic you want");
         System.out.println(id);
+        //Selects the Topic
         this.publisher.sendOneTimeMessage(id);
+        //Returns the TopicName
         String topicName = this.consumer.listenForMessageOneTime();
         System.out.println("If you want to exit from topic write " + Config.EXIT_FROM_TOPIC);
-        return topicName;
+        //return topicName;
     }
-    public static void main(String[] args) throws IOException, InterruptedException {
-        String username = Config.readFromUser("What is your name?");
-        Client client  = new Client(Config.ZOOKEEPER_CLIENTS, username);
-        String topicName = client.initialConnectWithZookeeperAndGetTopic(username);
 
-        //Images
-        //client.consumer.listenForImages();
-        //client.publisher.sendImage();
+    public  void dosmth(Client client,String username) throws IOException, InterruptedException {
 
-        //Messages
-
-
-
-        System.out.println("You select " + topicName);
-        System.out.println("Complete set up");
-        Address address = client.getBrokerAddress();
-        client  = new Client(address, username);
-        client.initialBroker(topicName);
-        while (true){
-            try{
-                client.consumer.listenForMessage();
-                client.publisher.sendMessage();
-            }catch (IOException e){
-                client.socket.close();
-                client  = new Client(Config.ZOOKEEPER_CLIENTS, username);
-                topicName = client.initialConnectWithZookeeperAndGetTopic(username);
-                System.out.println("You select " + topicName);
-                System.out.println("Complete set up");
-                address = client.getBrokerAddress();
-                client  = new Client(address, username);
-                client.initialBroker(topicName);
-            }
-        }
+//        String topicName = client.initialConnectWithZookeeperAndGetTopic(username);
+//
+//        //Images
+//        //client.consumer.listenForImages();
+//        //client.publisher.sendImage();
+//
+//        //Messages
+//
+//
+//
+//        System.out.println("You select " + topicName);
+//        System.out.println("Complete set up");
+//        Address address = client.getBrokerAddress();
+//        client  = new Client(address, username);
+//        client.initialBroker(topicName);
+//        while (true){
+//            try{
+//                client.consumer.listenForMessage();
+//                client.publisher.sendMessage();
+//            }catch (IOException e){
+//                client.socket.close();
+//                client  = new Client(Config.ZOOKEEPER_CLIENTS, username);
+//                topicName = client.initialConnectWithZookeeperAndGetTopic(username);
+//                System.out.println("You select " + topicName);
+//                System.out.println("Complete set up");
+//                address = client.getBrokerAddress();
+//                client  = new Client(address, username);
+//                client.initialBroker(topicName);
+//            }
+//        }
 
 
 

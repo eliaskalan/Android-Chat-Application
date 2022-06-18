@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Topics">
+    tools:context=".Topics"
+    android:id="@+id/topicLayout"
+    >
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
         android:layout_marginStart="1dp"
         android:layout_marginTop="1dp"
         android:layout_marginEnd="1dp"
@@ -18,8 +18,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@android:color/transparent"
+        android:scrollbars="none"
+        android:stackFromBottom="true"
+        android:transcriptMode="alwaysScroll"
+        >
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
@@ -28,40 +34,16 @@
             android:textAlignment="center"
             android:textSize="48sp" />
 
-        <Button
-            android:id="@+id/button2"
+        <ListView
+            android:id="@+id/buttonListView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/Topic1" />
+            android:layout_above="@+id/linearLayout"
+            android:divider="@android:color/transparent"
+            android:scrollbars="none"
+            android:stackFromBottom="true"
+            android:transcriptMode="alwaysScroll"
+            tools:listitem="@layout/topic_buttons" />
 
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/Topic2" />
-
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/Topic3" />
-
-        <Button
-            android:id="@+id/button5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/Topic4" />
-
-        <Button
-            android:id="@+id/button6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/Topic5" />
-
-        <Button
-            android:id="@+id/button7"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/Topic6" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,7 +20,7 @@ public class Config {
     public static String SAVED_FILES_PATH = "C:/Users/elias/Documents/";
     public static final String IMAGE_TYPE="image";
     public static final String MESSAGE_TYPE="message";
-    public static String ZOOKEEPER_IP = "localhost";
+    public static String ZOOKEEPER_IP = "10.0.2.2";
 
     public static Address ZOOKEEPER_CLIENTS = new Address(ZOOKEEPER_IP, 22346);
 
