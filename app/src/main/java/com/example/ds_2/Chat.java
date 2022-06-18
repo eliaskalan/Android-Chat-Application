@@ -26,7 +26,7 @@ public class Chat extends AppCompatActivity {
     private Client client;
     private String name;
     private String topic;
-    String username;
+    String otherClientUsername;
     String context;
 
     @Override
@@ -48,6 +48,14 @@ public class Chat extends AppCompatActivity {
         chat.execute();
     }
 
+    private void writeOnAndroid(String nameToWrite, String contextToWrite){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                messageAdapter.add(new MessageItem(nameToWrite, contextToWrite));
+            }
+        });
+    }
     public class ChatConnect extends AsyncTask<String,String ,String>
     {
 
@@ -56,30 +64,31 @@ public class Chat extends AppCompatActivity {
 
             try {
                 client = new Client(new Address(brokerIp, Integer.parseInt(brokerPort)),name);
-                System.out.println(name);
                 client.initialBroker(topic);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
+                        otherClientUsername = "";
+                        context = "";
                         String msgFromGroupChat;
                         while (client.consumer.socketIsConnected()) {
                             try {
                                 msgFromGroupChat = client.consumer.readMessage();
                                 String[] message =msgFromGroupChat.split(":");
+
                                 for(int i=0; i < message.length; i++){
                                     if(i == 0){
-                                        username = message[i];
+                                        otherClientUsername = message[i];
                                     }else{
                                         context = message[i];
                                     }
                                 }
 
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        messageAdapter.add(new MessageItem(name, context));
-                                    }
-                                });
+                                if(!otherClientUsername.equals("")){
+                                    writeOnAndroid(otherClientUsername, context);
+                                }
+
+
                             } catch (IOException e) {
                                 closeEverything(client.consumer.getSocket(), client.consumer.getBufferedReader());
                             }
