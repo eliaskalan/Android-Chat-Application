@@ -7,6 +7,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import java.io.IOException;
@@ -26,6 +29,8 @@ public class Chat extends AppCompatActivity {
     private Client client;
     private String name;
     private String topic;
+    private EditText editText;
+    private Button sendButton;
     String otherClientUsername;
     String context;
 
@@ -44,6 +49,18 @@ public class Chat extends AppCompatActivity {
         final List<MessageItem> messages = new ArrayList<>();
         messageAdapter = new MessageAdapter(this, R.layout.item_message, messages);
         messageList.setAdapter(messageAdapter);
+        editText = findViewById(R.id.messageEditText);
+        sendButton = findViewById(R.id.sendButton);
+
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String userMessage = editText.getText().toString();
+                editText.setText("");
+                writeOnAndroid(name, userMessage);
+                sendMessage(userMessage);
+            }
+        });
         chat = new ChatConnect();
         chat.execute();
     }
@@ -55,6 +72,17 @@ public class Chat extends AppCompatActivity {
                 messageAdapter.add(new MessageItem(nameToWrite, contextToWrite));
             }
         });
+    }
+    private void sendMessage(String message){
+        new Thread(new Runnable(){
+            public void run() {
+                try {
+                    client.publisher.sendMessage(message);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
     public class ChatConnect extends AsyncTask<String,String ,String>
     {

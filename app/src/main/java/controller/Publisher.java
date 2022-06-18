@@ -38,14 +38,12 @@ public class Publisher implements Serializable {
     }
 
 
-    public void sendMessage() throws IOException {
-        Scanner scanner = new Scanner(System.in);
-        while (socket.isConnected()) {
-            String messageToSend = scanner.nextLine();
-            if(messageToSend.equals(Config.EXIT_FROM_TOPIC)){
+    public void sendMessage(String context) throws IOException {
+        if (socket.isConnected()) {
+            if (context.equals(Config.EXIT_FROM_TOPIC)) {
                 throw new IOException("Go to zookeeper");
             }
-            Config.sendAMessage(bufferedWriter, this.profileName.getUserId() + ": " + messageToSend);
+            Config.sendAMessage(bufferedWriter, this.profileName.getUserId() + ": " + context);
         }
     }
 
