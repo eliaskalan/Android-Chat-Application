@@ -22,6 +22,7 @@ public class Topics extends AppCompatActivity {
     private ListView topicsButtonListView;
     private TopicsButtonAdapter topicsButtonAdapter;
     private Intent intent;
+    private String name;
     Login login;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +32,7 @@ public class Topics extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         intent = new Intent(Topics.this,Chat.class);
         if (extras != null) {
-            String name = extras.getString("USERNAME");
+            name = extras.getString("USERNAME");
             //The key argument here must match that used in the other activity
             login = new Login();
             login.execute(name);
@@ -45,6 +46,7 @@ public class Topics extends AppCompatActivity {
         Button b = (Button) view;
         String topicFullName = b.getText().toString();
         intent.putExtra("TOPIC_FULL_NAME", topicFullName);
+        intent.putExtra("USERNAME", name);
         String topicId = Character.toString(topicFullName.replace(" ", "").charAt(0));
         intent.putExtra("TOPIC_ID", topicId);
         new Thread(new Runnable(){
