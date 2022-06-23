@@ -14,9 +14,12 @@ public class Client {
     public Publisher publisher;
     ProfileName profileName;
     private Socket socket;
+    private Address address;
+    public boolean hasTopic = false;
 
     public Client(Address address, String name) throws IOException {
         try{
+            this.address = address;
             this.socket = new Socket(address.getIp(), address.getPort());
             this.consumer = new Consumer(socket);
             this.profileName = new ProfileName(name);
@@ -26,6 +29,15 @@ public class Client {
         }
     }
 
+    public  Address getAddress(){
+        return address;
+    }
+    public void closeSocket() throws IOException {
+        socket.close();
+    }
+    public Socket getSocket(){
+        return socket;
+    }
     public void initialBroker(String topicName) throws IOException {
         this.publisher.sendOneTimeMessage(this.profileName.getProfileName());
         this.publisher.sendOneTimeMessage(this.profileName.getUserId());

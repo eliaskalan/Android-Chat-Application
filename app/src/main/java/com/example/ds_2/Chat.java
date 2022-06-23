@@ -18,6 +18,7 @@ import java.util.List;
 
 import controller.Address;
 import controller.Client;
+import utils.Config;
 
 public class Chat extends AppCompatActivity {
     private Intent intent;
@@ -63,6 +64,16 @@ public class Chat extends AppCompatActivity {
         });
         chat = new ChatConnect();
         chat.execute();
+    }
+
+    @Override
+    public void onBackPressed() {
+        try {
+            client.closeSocket();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        super.onBackPressed();
     }
 
     private void writeOnAndroid(String nameToWrite, String contextToWrite){
