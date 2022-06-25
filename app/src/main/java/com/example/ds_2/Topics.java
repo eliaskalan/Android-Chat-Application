@@ -97,7 +97,13 @@ public class Topics extends AppCompatActivity {
                 for(int i = 0; i < topics.length; i++){
                     String text = topics[i];
                     if(!(text.replace(" ", "")).equals("")){
-                        topicsButtonAdapter.add(new TopicButtonMessage((topics[i])));
+                        System.out.println(text);
+
+                        new Thread(new Runnable(){
+                            public void run() {
+                                topicsButtonAdapter.add(new TopicButtonMessage(text));
+                            }
+                        }).start();
                     }
                 }
             } catch (IOException e) {
