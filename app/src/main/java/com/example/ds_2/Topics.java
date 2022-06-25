@@ -80,6 +80,7 @@ public class Topics extends AppCompatActivity {
             client.hasTopic = false;
             client.publisher.sendOneTimeMessage(topicId);
             String topicName = client.consumer.listenForMessageOneTime();
+            intent.putExtra("TOPIC_NAME", topicName);
             Address address = client.getBrokerAddress();
             return address;
         }
