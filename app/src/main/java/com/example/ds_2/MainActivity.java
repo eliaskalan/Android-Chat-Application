@@ -52,10 +52,6 @@ public class MainActivity extends AppCompatActivity {
 
                     intent.putExtra("USERNAME",name);
                     startActivity(intent);
-                    //Login login = new Login();
-                    //login.execute(name);
-                    //login.doInBackground(name);
-                    //nextActivity(v);
                 }
             }
         });
