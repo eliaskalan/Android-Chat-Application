@@ -33,7 +33,6 @@ public class Topics extends AppCompatActivity {
         intent = new Intent(Topics.this,Chat.class);
         if (extras != null) {
             name = extras.getString("USERNAME");
-            //The key argument here must match that used in the other activity
             login = new Login();
             login.execute(name);
         }
@@ -52,10 +51,16 @@ public class Topics extends AppCompatActivity {
         new Thread(new Runnable(){
             public void run() {
                 try {
+                    if(client.getAddress() != Config.ZOOKEEPER_CLIENTS || !client.consumer.socketIsConnected()){
+                        System.out.println("hello");
+                        login = new Login();
+                        login.execute(name);
+                    }
                     Address address = login.getBroker(topicId);
                     intent.putExtra("BROKER_IP", address.getIp());
                     intent.putExtra("BROKER_PORT", Integer.toString(address.getPort()));
                     startActivity(intent);
+                    client.hasTopic = true;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -67,8 +72,15 @@ public class Topics extends AppCompatActivity {
     {
 
         public Address getBroker(String topicId) throws IOException {
+            if(client.hasTopic){
+                client.closeSocket();
+                login(name);
+                client.getTopic();
+            }
+            client.hasTopic = false;
             client.publisher.sendOneTimeMessage(topicId);
             String topicName = client.consumer.listenForMessageOneTime();
+            intent.putExtra("TOPIC_NAME", topicName);
             Address address = client.getBrokerAddress();
             return address;
         }
@@ -78,16 +90,20 @@ public class Topics extends AppCompatActivity {
 
 
             try {
-
-                client = new Client(Config.ZOOKEEPER_CLIENTS,strings[0]);
-                client.initialConnectWithZookeeper(strings[0]);
+                login(strings[0]);
                 String localTopics = client.getTopic();
                 String[] topics =localTopics.split("~");
 
                 for(int i = 0; i < topics.length; i++){
                     String text = topics[i];
                     if(!(text.replace(" ", "")).equals("")){
-                        topicsButtonAdapter.add(new TopicButtonMessage((topics[i])));
+                        System.out.println(text);
+
+                        new Thread(new Runnable(){
+                            public void run() {
+                                topicsButtonAdapter.add(new TopicButtonMessage(text));
+                            }
+                        }).start();
                     }
                 }
             } catch (IOException e) {
@@ -96,6 +112,11 @@ public class Topics extends AppCompatActivity {
 
 
             return null;
+        }
+
+        public void login(String name) throws IOException {
+            client = new Client(Config.ZOOKEEPER_CLIENTS, name);
+            client.initialConnectWithZookeeper(name);
         }
     }
 }

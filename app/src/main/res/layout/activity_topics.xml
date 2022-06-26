@@ -10,22 +10,22 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
         android:layout_marginTop="1dp"
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="1dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:divider="@android:color/transparent"
+        android:orientation="vertical"
         android:scrollbars="none"
         android:stackFromBottom="true"
         android:transcriptMode="alwaysScroll"
-        >
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
@@ -37,7 +37,7 @@
         <ListView
             android:id="@+id/buttonListView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_above="@+id/linearLayout"
             android:divider="@android:color/transparent"
             android:scrollbars="none"

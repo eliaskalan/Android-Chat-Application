@@ -18,6 +18,7 @@ import java.util.List;
 
 import controller.Address;
 import controller.Client;
+import utils.Config;
 
 public class Chat extends AppCompatActivity {
     private Intent intent;
@@ -28,6 +29,7 @@ public class Chat extends AppCompatActivity {
     private String brokerPort;
     private Client client;
     private String name;
+    private String topicName;
     private String topic;
     private EditText editText;
     private Button sendButton;
@@ -39,6 +41,7 @@ public class Chat extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         topic = getIntent().getStringExtra("TOPIC_FULL_NAME");
+        topicName = getIntent().getStringExtra("TOPIC_NAME");
         brokerIp = getIntent().getStringExtra("BROKER_IP");
         brokerPort = getIntent().getStringExtra("BROKER_PORT");
         String topicId = getIntent().getStringExtra("TOPIC_ID");
@@ -63,6 +66,16 @@ public class Chat extends AppCompatActivity {
         });
         chat = new ChatConnect();
         chat.execute();
+    }
+
+    @Override
+    public void onBackPressed() {
+        try {
+            client.closeSocket();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        super.onBackPressed();
     }
 
     private void writeOnAndroid(String nameToWrite, String contextToWrite){
@@ -92,7 +105,7 @@ public class Chat extends AppCompatActivity {
 
             try {
                 client = new Client(new Address(brokerIp, Integer.parseInt(brokerPort)),name);
-                client.initialBroker(topic);
+                client.initialBroker(topicName);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
